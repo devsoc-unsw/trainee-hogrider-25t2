@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 export default function DisplayResultPage() {
   const router = useRouter();
   const [resultString, setResultString] = useState<string | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
     // Check if window is defined (client-side)
