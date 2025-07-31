@@ -14,8 +14,6 @@ type FormInputs = z.infer<typeof formSchema>;
 
 export default function AiExample() {
   const dataMutation = api.ai.burnMoney.useMutation();
-  const query = api.ai.getCalendarEvents.useQuery();
-  console.log(query.data);
 
   const router = useRouter();
 
