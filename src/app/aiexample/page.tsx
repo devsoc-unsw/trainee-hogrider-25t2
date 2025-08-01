@@ -24,10 +24,11 @@ export default function AiExample() {
     dataMutation.mutate(
       { text: data.text, character: data.character },
       {
-        async onSuccess(data) {
+        async onSuccess(success_data) {
           // Store the long string in session storage
           if (typeof window !== "undefined") {
-            sessionStorage.setItem("processedResultString", data);
+            sessionStorage.setItem("processedResultString", success_data);
+            sessionStorage.setItem("character", data.character!);
           }
 
           // Navigate to the display page
