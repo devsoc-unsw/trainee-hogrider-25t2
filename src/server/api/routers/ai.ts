@@ -46,12 +46,11 @@ export const aiRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       let character: Character = new Professional();
 
-      if (input.character === "League Player") {
-        character = new LeaguePlayer();
-      } else if (input.character === "Secretary") {
-        character = new Secretary();
-      } else if (input.character === "Rage Bait") {
-        character = new RageBait();
+      for (const c of CHARACTERS) {
+        if (c.getName() === input.character) {
+          character = c;
+          break;
+        }
       }
 
       console.log("Start Call");
@@ -88,12 +87,11 @@ export const aiRouter = createTRPCRouter({
       // 3. Stretch: allow the ai to further investigate based on our input
       let character: Character = new Professional();
 
-      if (input.character === "League Player") {
-        character = new LeaguePlayer();
-      } else if (input.character === "Secretary") {
-        character = new Secretary();
-      } else if (input.character === "Rage Bait") {
-        character = new RageBait();
+      for (const c of CHARACTERS) {
+        if (c.getName() === input.character) {
+          character = c;
+          break;
+        }
       }
 
       const SYSTEM_PROMPT = {
@@ -101,28 +99,26 @@ export const aiRouter = createTRPCRouter({
         content: character.getSystemPrompt(input.text),
       };
 
-      const apis: ExcuseApi[] = [new CalendarApi(ctx.session.accessToken)];
+      const apis: ExcuseApi[] = [
+        // new CalendarApi(ctx.session.accessToken)
+      ];
 
       const messages: CoreMessage[] = [SYSTEM_PROMPT];
 
       const start_all_api = Date.now();
-      // for (const api of apis) {
-      //   try {
-      //     const start = Date.now();
-      //     const excuse = await api.getInformation();
-      //     console.log(
-      //       "     API: " +
-      //         api.getName() +
-      //         " took " +
-      //         (Date.now() - start) +
-      //         "ms",
-      //     );
-      //     messages.push({ role: "system", content: api.getExcusePrompt() });
-      //     messages.push({ role: "user", content: excuse });
-      //   } catch (e) {
-      //     console.log("Skipping api: " + api.getName(), e);
-      //   }
-      // }
+      for (const api of apis) {
+        try {
+          const start = Date.now();
+          const excuse = await api.getInformation();
+          console.log(
+            `     API: ${api.getName()} took ${Date.now() - start}ms`,
+          );
+          messages.push({ role: "system", content: api.getExcusePrompt() });
+          messages.push({ role: "user", content: excuse });
+        } catch (e) {
+          console.log("Skipping api: " + api.getName(), e);
+        }
+      }
 
       console.log("Total time: " + (Date.now() - start_all_api) + "ms");
 
