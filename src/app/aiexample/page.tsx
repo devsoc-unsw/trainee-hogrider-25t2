@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   text: z.string().min(1, "Required"),
+  character: z.string().optional(),
   // TODO: Add appropiate input fields as required
 });
 
@@ -14,13 +15,14 @@ type FormInputs = z.infer<typeof formSchema>;
 
 export default function AiExample() {
   const dataMutation = api.ai.burnMoney.useMutation();
+  const { data } = api.ai.getCharacters.useQuery();
 
   const router = useRouter();
 
   const { register, handleSubmit } = useForm<FormInputs>();
   const onSubmit = handleSubmit((data) => {
     dataMutation.mutate(
-      { text: data.text },
+      { text: data.text, character: data.character },
       {
         async onSuccess(data) {
           // Store the long string in session storage
@@ -36,9 +38,19 @@ export default function AiExample() {
     );
   });
   return (
-    <form onSubmit={onSubmit} className="m-4 flex w-128 flex-col items-center">
+    <form
+      onSubmit={onSubmit}
+      className="m-4 flex w-128 flex-col items-center gap-2"
+    >
       <label>Some text to prompt the AI</label>
       <input className="w-full border-1" {...register("text")} />
+      <select {...register("character")} className="border-1">
+        {data?.map((character) => (
+          <option key={character} value={character}>
+            {character}
+          </option>
+        ))}
+      </select>
       <button
         className={`m-3 w-full cursor-pointer ${dataMutation.isPending ? "animate-pulse bg-gray-200" : "bg-blue-500"}`}
         disabled={dataMutation.isPending}

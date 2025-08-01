@@ -1,10 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { api } from "~/trpc/react";
 
 export default function DisplayResultPage() {
   const router = useRouter();
   const [resultString, setResultString] = useState<string | null>(null);
+  const [phoneNumber, setPhoneNumber] = useState<string>("+61");
+
+  const callMutation = api.ai.callSomeone.useMutation();
 
   useEffect(() => {
     // Check if window is defined (client-side)
@@ -40,6 +44,26 @@ export default function DisplayResultPage() {
       >
         Go Back
       </button>
+      <div>
+        <input
+          type="text"
+          placeholder="Phone Number"
+          className="border-1"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+        <button
+          onClick={() => {
+            callMutation.mutate({
+              text: resultString,
+              phoneNumber: phoneNumber,
+            });
+          }}
+          className="mt-8 bg-emerald-100 text-indigo-600 hover:underline"
+        >
+          Call someone
+        </button>
+      </div>
     </div>
   );
 }

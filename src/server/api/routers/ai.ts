@@ -17,37 +17,46 @@ import Secretary from "../service/character/secretary";
 
 const vapi = new VapiClient({ token: process.env.VAPI_TOKEN! });
 
+const CHARACTERS = [new Professional(), new LeaguePlayer(), new Secretary()];
+
 export const aiRouter = createTRPCRouter({
   getCalendarEvents: protectedProcedure.query(async ({ ctx }) => {
     const calendar = new CalendarApi(ctx.session.accessToken);
     return await calendar.getInformation();
   }),
 
-  // callSomeone: publicProcedure
-  //   .input(z.object({ text: z.string() }))
-  //   .mutation(async ({ input }) => {
-  //     const call = await vapi.calls.create({
-  //       assistant: {
-  //         name: "Kevin Shen",
-  //         firstMessage: input.text,
-  //         model: {
-  //           provider: "openai",
-  //           model: "gpt-4o",
-  //           messages: [
-  //             {
-  //               role: "system",
-  //               content:
-  //                 "You are Kevin, a friendly Bazaar player. Your favourite card is Electric Eels",
-  //             },
-  //           ],
-  //         },
-  //         voice: {
-  //           provider: "11labs",
-  //           voiceId: "burt",
-  //         },
-  //       },
-  //     });
-  //   }),
+  getCharacters: publicProcedure.query(() => {
+    return CHARACTERS.map((c) => c.getName());
+  }),
+
+  callSomeone: protectedProcedure
+    .input(z.object({ text: z.string(), phoneNumber: z.string() }))
+    .mutation(async ({ input }) => {
+      console.log("Start Call");
+      const call = await vapi.calls.create({
+        assistant: {
+          name: "Kevin Shen",
+          firstMessage: input.text,
+          model: {
+            provider: "openai",
+            model: "gpt-4o",
+            messages: [
+              {
+                role: "system",
+                content:
+                  "You are Kevin, a friendly Bazaar player. Your favourite card is Electric Eels. You play a lot of league of legends",
+              },
+            ],
+          },
+        },
+        phoneNumberId: "518e5ee4-cd88-43e3-a5ac-343e1d387def",
+        customer: {
+          number: input.phoneNumber,
+        },
+      });
+      console.log("finish call");
+      return "ok";
+    }),
 
   burnMoney: protectedProcedure
     .input(z.object({ text: z.string(), character: z.string().optional() }))
@@ -58,9 +67,9 @@ export const aiRouter = createTRPCRouter({
       // 3. Stretch: allow the ai to further investigate based on our input
       let character: Character = new Professional();
 
-      if (input.character === "league_player") {
+      if (input.character === "League Player") {
         character = new LeaguePlayer();
-      } else if (input.character === "secretary") {
+      } else if (input.character === "Secretary") {
         character = new Secretary();
       }
 
