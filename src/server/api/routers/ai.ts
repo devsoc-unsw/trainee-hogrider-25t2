@@ -2,9 +2,20 @@ import { z } from "zod";
 import { generateText, type CoreMessage } from "ai";
 import { openai } from "@ai-sdk/openai";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import CalendarApi from "../service/calendar";
 import type { ExcuseApi } from "../service/excuseapi";
+import { VapiClient } from "@vapi-ai/server-sdk";
+import LeaguePlayer from "../service/character/leaguePlayer";
+import Professional from "../service/character/professional";
+import type Character from "../service/character/character";
+import Secretary from "../service/character/secretary";
+
+const vapi = new VapiClient({ token: process.env.VAPI_TOKEN! });
 
 export const aiRouter = createTRPCRouter({
   getCalendarEvents: protectedProcedure.query(async ({ ctx }) => {
@@ -12,17 +23,50 @@ export const aiRouter = createTRPCRouter({
     return await calendar.getInformation();
   }),
 
+  // callSomeone: publicProcedure
+  //   .input(z.object({ text: z.string() }))
+  //   .mutation(async ({ input }) => {
+  //     const call = await vapi.calls.create({
+  //       assistant: {
+  //         name: "Kevin Shen",
+  //         firstMessage: input.text,
+  //         model: {
+  //           provider: "openai",
+  //           model: "gpt-4o",
+  //           messages: [
+  //             {
+  //               role: "system",
+  //               content:
+  //                 "You are Kevin, a friendly Bazaar player. Your favourite card is Electric Eels",
+  //             },
+  //           ],
+  //         },
+  //         voice: {
+  //           provider: "11labs",
+  //           voiceId: "burt",
+  //         },
+  //       },
+  //     });
+  //   }),
+
   burnMoney: protectedProcedure
-    .input(z.object({ text: z.string() }))
+    .input(z.object({ text: z.string(), character: z.string().optional() }))
     .mutation(async ({ ctx, input }) => {
       // TODO
       // 1. Call appropiate APIs here
       // 2. Feed the relevant data into the ai to generate a response
       // 3. Stretch: allow the ai to further investigate based on our input
+      let character: Character = new Professional();
+
+      if (input.character === "league_player") {
+        character = new LeaguePlayer();
+      } else if (input.character === "secretary") {
+        character = new Secretary();
+      }
+
       const SYSTEM_PROMPT = {
         role: "system" as const,
-        content: `You are an excuse generator. You will be given a few excuses combine them and make a nice sounding excuse for why the user is late
-        ${input.text}`,
+        content: character.getSystemPrompt(input.text),
       };
 
       const apis: ExcuseApi[] = [new CalendarApi(ctx.session.accessToken)];
