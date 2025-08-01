@@ -68,7 +68,6 @@ export const authConfig = {
         try {
           // https://accounts.google.com/.well-known/openid-configuration
           // We need the `token_endpoint`.
-          console.log("pre response");
           const response = await fetch("https://oauth2.googleapis.com/token", {
             method: "POST",
             body: new URLSearchParams({
@@ -78,7 +77,6 @@ export const authConfig = {
               refresh_token: (googleAccount.refresh_token ??= ""),
             }),
           });
-          console.log("post response");
 
           // TODO: Resolve this type error
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
