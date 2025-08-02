@@ -68,6 +68,10 @@ export const aiRouter = createTRPCRouter({
               },
             ],
           },
+          // voice: {
+          //   provider: "11labs",
+          //   voiceId: "xctasy8XvGp2cVO9HL9k",
+          // },
         },
         phoneNumberId: "518e5ee4-cd88-43e3-a5ac-343e1d387def",
         customer: {
