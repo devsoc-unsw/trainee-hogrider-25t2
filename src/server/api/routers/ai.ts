@@ -84,9 +84,9 @@ export const aiRouter = createTRPCRouter({
     }),
 
   burnMoney: protectedProcedure
+    // If necessary add more parameters. Described by zod if you want to look it up
     .input(z.object({ text: z.string(), character: z.string().optional() }))
     .mutation(async ({ ctx, input }) => {
-      // TODO
       // 1. Call appropiate APIs here
       // 2. Feed the relevant data into the ai to generate a response
       // 3. Stretch: allow the ai to further investigate based on our input
