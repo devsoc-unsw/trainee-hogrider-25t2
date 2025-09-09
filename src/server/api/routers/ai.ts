@@ -104,7 +104,7 @@ export const aiRouter = createTRPCRouter({
         content: character.getSystemPrompt(input.text),
       };
 
-      const apis: ExcuseApi[] = [new CalendarApi(ctx.session.accessToken)];
+      const apis: ExcuseApi[] = [];
 
       const messages: CoreMessage[] = [SYSTEM_PROMPT];
 
@@ -127,10 +127,12 @@ export const aiRouter = createTRPCRouter({
       console.log("Total time: " + (Date.now() - start_all_api) + "ms");
 
       const start_ai = Date.now();
+      console.log("Here");
       const { text } = await generateText({
         model: openai("o3-mini"),
         messages: messages,
       });
+      console.log("There");
 
       console.log("AI took " + (Date.now() - start_ai) + "ms");
       return text;
