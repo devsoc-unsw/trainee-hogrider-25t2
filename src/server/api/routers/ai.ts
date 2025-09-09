@@ -15,6 +15,7 @@ import Professional from "../service/character/professional";
 import type Character from "../service/character/character";
 import Secretary from "../service/character/secretary";
 import RageBait from "../service/character/rageBait";
+import { exec } from "child_process";
 
 const vapi = new VapiClient({ token: process.env.VAPI_TOKEN! });
 
@@ -103,9 +104,7 @@ export const aiRouter = createTRPCRouter({
         content: character.getSystemPrompt(input.text),
       };
 
-      const apis: ExcuseApi[] = [
-        // new CalendarApi(ctx.session.accessToken)
-      ];
+      const apis: ExcuseApi[] = [];
 
       const messages: CoreMessage[] = [SYSTEM_PROMPT];
 
@@ -114,6 +113,7 @@ export const aiRouter = createTRPCRouter({
         try {
           const start = Date.now();
           const excuse = await api.getInformation();
+          console.log(excuse);
           console.log(
             `     API: ${api.getName()} took ${Date.now() - start}ms`,
           );
@@ -127,10 +127,12 @@ export const aiRouter = createTRPCRouter({
       console.log("Total time: " + (Date.now() - start_all_api) + "ms");
 
       const start_ai = Date.now();
+      console.log("Here");
       const { text } = await generateText({
         model: openai("o3-mini"),
         messages: messages,
       });
+      console.log("There");
 
       console.log("AI took " + (Date.now() - start_ai) + "ms");
       return text;
