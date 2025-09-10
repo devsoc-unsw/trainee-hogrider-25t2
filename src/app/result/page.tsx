@@ -1,7 +1,20 @@
 // Mary code here!!!
 "use client";
+import { useEffect, useState } from "react";
 
 export default function Result() {
+  const [resultString, setResultString] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedResult = sessionStorage.getItem("processedResultString");
+
+      if (storedResult) {
+        setResultString(storedResult);
+      }
+    }
+  }, []);
+
   return (
     <div className=" relative min-h-screen bg-blue-500" 
          style={{ 
@@ -29,7 +42,7 @@ export default function Result() {
         </div>
 
         <div className="flex-[2] bg-white p-4 rounded-lg text-[1.6rem] drop-shadow-2xl  bg-gradient-to-br from-white-600 to-teal-600">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          {resultString || "LOADING..."} 
         </div>
       </main>
 
