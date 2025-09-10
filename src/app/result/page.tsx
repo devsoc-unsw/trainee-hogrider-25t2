@@ -1,9 +1,11 @@
 // Mary code here!!!
 "use client";
+import Nav from "../_components/nav";
 import { useEffect, useState } from "react";
 
 export default function Result() {
   const [resultString, setResultString] = useState<string | null>(null);
+  const [backgroundImage, setBackgroundImage] = useState<string>("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -12,13 +14,22 @@ export default function Result() {
       if (storedResult) {
         setResultString(storedResult);
       }
+
+      const backgrounds = [
+        "url('/images/imlate-bg1.jpg')",
+        "url('/images/imlate-bg2.jpg')",
+        "url('/images/imlate-bg3.jpg')"
+      ];
+  
+      const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)]!;
+        setBackgroundImage(randomBg);
     }
   }, []);
 
   return (
     <div className=" relative min-h-screen bg-blue-500" 
          style={{ 
-           backgroundImage: "url('/images/imlate-bg2.jpg')",
+           backgroundImage: backgroundImage,
            backgroundSize: "100% 95%",
            backgroundPosition: "center 50px"
          }}>
@@ -26,12 +37,7 @@ export default function Result() {
       {/* bg image overlay */}
       <div className="absolute inset-0 bg-black
        opacity-20"></div>
-      
-      {/* temp navbar */}
-      <nav className="relative z-30 fixed top-0 left-0 right-0 h-20 bg-black flex justify-end items-center px-6 bg-gradient-to-br from-teal-600 to-blue-600">
-        <h1 className="text-white font-bold text-xl">I'M LATE!</h1>
-      </nav>
-
+      <Nav />
       {/* ai-generated excuse */}
       <main className="relative z-10 flex gap-40 mx-25 min-h-[15vh] mt-[70px]">
         <div className="flex-[0.5] flex items-center justify-center bg-black p-4 rounded-lg text-white drop-shadow-2xl bg-gradient-to-br from-teal-600 to-blue-600">
