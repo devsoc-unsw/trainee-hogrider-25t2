@@ -3,9 +3,10 @@
 
 export default function Result() {
   return (
-    <div className="bg-cover bg-center relative min-h-screen bg-blue-500" 
+    <div className=" relative min-h-screen bg-blue-500" 
          style={{ 
            backgroundImage: "url('/images/imlate-bg2.jpg')",
+           backgroundSize: "100% 95%",
            backgroundPosition: "center 50px"
          }}>
       
@@ -14,20 +15,20 @@ export default function Result() {
        opacity-20"></div>
       
       {/* temp navbar */}
-      <nav className="relative z-30 fixed top-0 left-0 right-0 h-20 bg-black flex justify-end items-center px-6">
+      <nav className="relative z-30 fixed top-0 left-0 right-0 h-20 bg-black flex justify-end items-center px-6 bg-gradient-to-br from-teal-600 to-blue-600">
         <h1 className="text-white font-bold text-xl">I'M LATE!</h1>
       </nav>
 
       {/* ai-generated excuse */}
       <main className="relative z-10 flex gap-40 mx-25 min-h-[15vh] mt-[70px]">
-        <div className="flex-[0.5] flex items-center justify-center bg-black p-4 rounded-lg text-white drop-shadow-2xl">
-          <p className="mt-0.5 text-6xl font-bold leading-tight -rotate-[3deg] font-brush">
+        <div className="flex-[0.5] flex items-center justify-center bg-black p-4 rounded-lg text-white drop-shadow-2xl bg-gradient-to-br from-teal-600 to-blue-600">
+          <p className="mt-0.5 text-6xl font-bold leading-tight -rotate-[3deg] font-brush ">
             <span className="block">SORRY</span>
             <span className="block -ml-2">GUYS...!</span>
           </p>
         </div>
 
-        <div className="flex-[2] bg-white p-4 rounded-lg text-[1.6rem] drop-shadow-2xl">
+        <div className="flex-[2] bg-white p-4 rounded-lg text-[1.6rem] drop-shadow-2xl  bg-gradient-to-br from-white-600 to-teal-600">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         </div>
       </main>
@@ -35,7 +36,7 @@ export default function Result() {
       {/* see reactions */}
       <aside className="fixed bottom-16 left-16 w-50 z-40 font-brush drop-shadow-2xl">
         <button
-          className="py-2 px-4 bg-white text-black rounded-lg border-none cursor-pointer font-semibold w-full box-border"
+          className="py-2 px-4 bg-white text-black rounded-lg border-none cursor-pointer font-semibold w-full box-border   bg-gradient-to-br from-teal-600 to-white-600"
           onClick={() => {
             alert("wop wop not working yet");
           }}
