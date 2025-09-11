@@ -3,4 +3,13 @@
 @theme {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-brush: "Slank Brush", cursive;
+}
+
+@font-face {
+  font-family: "Slank Brush";
+  src: url("/fonts/SlankBrush.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }

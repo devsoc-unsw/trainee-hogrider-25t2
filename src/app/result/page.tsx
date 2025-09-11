@@ -1,35 +1,61 @@
 // Mary code here!!!
 "use client";
-
-import styles from "./temp-style.module.css";
+import Nav from "../_components/nav";
+import { useEffect, useState } from "react";
 
 export default function Result() {
-  return (
-    <div className={styles.pageContainer}>
-      {/* temp navbar */}
-      <nav className={styles.navBar}>
-        <h1 className="text-white font-bold text-xl">I'M LATE!</h1>
-      </nav>
+  const [resultString, setResultString] = useState<string | null>(null);
+  const [backgroundImage, setBackgroundImage] = useState<string>("");
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedResult = sessionStorage.getItem("processedResultString");
+
+      if (storedResult) {
+        setResultString(storedResult);
+      }
+
+      const backgrounds = [
+        "url('/images/imlate-bg1.jpg')",
+        "url('/images/imlate-bg2.jpg')",
+        "url('/images/imlate-bg3.jpg')"
+      ];
+  
+      const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)]!;
+        setBackgroundImage(randomBg);
+    }
+  }, []);
+
+  return (
+    <div className=" relative min-h-screen bg-blue-500" 
+         style={{ 
+           backgroundImage: backgroundImage,
+           backgroundSize: "100% 95%",
+           backgroundPosition: "center 50px"
+         }}>
+      
+      {/* bg image overlay */}
+      <div className="absolute inset-0 bg-black
+       opacity-20"></div>
+      <Nav />
       {/* ai-generated excuse */}
-      <main className={styles.parentResponse}>
-        <div className={styles.sorryChild}>
-          <p className={styles.sorryText}>
-            <span>SORRY</span>
-            <br />
-            <span className={styles.leftShift}>GUYS...!</span>
+      <main className="relative z-10 flex gap-40 mx-25 min-h-[15vh] mt-[70px]">
+        <div className="flex-[0.5] flex items-center justify-center bg-black p-4 rounded-lg text-white drop-shadow-2xl bg-gradient-to-br from-teal-600 to-blue-600">
+          <p className="mt-0.5 text-6xl font-bold leading-tight -rotate-[3deg] font-brush ">
+            <span className="block">SORRY</span>
+            <span className="block -ml-2">GUYS...!</span>
           </p>
         </div>
 
-        <div className={styles.excuseChild}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        <div className="flex-[2] bg-white p-4 rounded-lg text-[1.6rem] drop-shadow-2xl  bg-gradient-to-br from-white-600 to-teal-600">
+          {resultString || "LOADING..."} 
         </div>
       </main>
 
       {/* see reactions */}
-      <aside className={styles.reactionContainer}>
+      <aside className="fixed bottom-16 left-16 w-50 z-40 font-brush drop-shadow-2xl">
         <button
-          className={styles.reactionButton}
+          className="py-2 px-4 bg-white text-black rounded-lg border-none cursor-pointer font-semibold w-full box-border   bg-gradient-to-br from-teal-600 to-white-600"
           onClick={() => {
             alert("wop wop not working yet");
           }}
