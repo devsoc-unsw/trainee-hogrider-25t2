@@ -4,22 +4,22 @@ export default function Nav() {
   return (
     <nav className="mb-8 flex items-center justify-between bg-black p-4 text-white">
       <Link href="/excuse" className="text-2xl font-bold">
-        Excuse Page
+        I'M LATE!
       </Link>
       <ul className="flex space-x-8 text-xl">
         <li>
           <Link href="/" className="hover:text-gray-400">
-            Home
+            HOME
           </Link>
         </li>
         <li>
           <Link href="/history" className="hover:text-gray-400">
-            History
+            HISTORY
           </Link>
         </li>
         <li>
           <Link href="/stats" className="hover:text-gray-400">
-            Stats
+            STATS
           </Link>
         </li>
       </ul>
