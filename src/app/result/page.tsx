@@ -58,7 +58,7 @@ export default function Result() {
         }}>
       
       {/* bg image overlay */}
-      <div className="absolute inset-x-0 top-10 bottom-0 bg-black opacity-50"></div>
+      <div className="absolute inset-x-0 top-12 bottom-0 bg-black opacity-50"></div>
       <Nav />
       
       {/* ai-generated excuse */}
