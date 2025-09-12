@@ -1,5 +1,6 @@
 // Mary code here!!!
 "use client";
+import router from "next/router";
 import Nav from "../_components/nav";
 import { useEffect, useState } from "react";
 
@@ -14,6 +15,8 @@ export default function Result() {
 
       if (storedResult) {
         setResultString(storedResult);
+      } else {
+        void router.replace("/aiexample"); // note : change later to actual form page
       }
 
       const backgrounds = [
