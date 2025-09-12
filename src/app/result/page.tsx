@@ -37,7 +37,7 @@ export default function Result() {
           bg: "url('/images/imlate-bg3.jpg')",
           scheme: {
             sorryBox: "bg-gradient-to-br from-[#316532] to-[#4FA050]",
-            responseBox: "bg-white/95 border-l-4 border-[#4FA050] shadow-[#4FA050]/80",
+            responseBox: "bg-white/95 border-l-4 border-[#4FA050] shadow-green-900/80",
             button: "bg-gradient-to-br from-blue-700 to-cyan-900"
           }
         }
@@ -63,14 +63,14 @@ export default function Result() {
       
       {/* ai-generated excuse */}
       <main className="relative z-10 flex gap-15 mx-auto px-16 min-h-[15vh] mt-[70px]">
-          <div className={`w-80 flex items-center justify-center ${colourScheme.sorryBox || 'bg-gradient-to-br from-gray-600 to-gray-900'} p-4 rounded-lg text-white drop-shadow-2xl`}>
+          <div className={`w-80 flex items-center justify-center ${colourScheme.sorryBox || 'bg-gradient-to-br from-gray-600 to-gray-900'} p-4 rounded-lg text-white drop-shadow-2xl shadow-2xl shadow-black/40`}>
             <p className="mt-0.5 text-[3.5rem] font-bold leading-tight -rotate-[3deg] font-brush ">
               <span className="block">SORRY</span>
               <span className="block -ml-2">GUYS...!</span>
             </p>
           </div>
 
-          <div className={`flex-1 ${colourScheme.responseBox || 'bg-white'} font-light tracking-wide p-6 rounded-lg text-lg leading-relaxed drop-shadow-2xl`}>
+          <div className={`flex-1 ${colourScheme.responseBox || 'bg-white'} font-light tracking-wide p-6 rounded-lg text-lg leading-relaxed drop-shadow-2xl shadow-lg shadow-black/50`}>
             {resultString || "LOADING..."} 
           </div>
         </main>
