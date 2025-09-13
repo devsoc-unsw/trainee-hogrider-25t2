@@ -17,7 +17,7 @@ export default function Result() {
       if (storedResult) {
         setResultString(storedResult);
       } else {
-        void router.replace("/aiexample"); // note : change later to actual form page
+        void router.replace("/excuse"); 
       }
 
       const backgrounds = [

@@ -49,7 +49,7 @@ class WeatherDestinationApi extends ExcuseApi {
   getExcusePrompt(): string {
     return `You have access to current weather information for the user's destination (${this.destination}).
         Like with the user's current location, when generating an excuse, consider mentioning the weather data.
-        If the weather seems fine, you can ignore this data, unless purposefully trying to make a nonsensical excuse.`;
+        If the weather seems fine, you DO NOT NEED TO MENTION THE WEATHER, unless purposefully trying to make a nonsensical excuse.`;
   }
 
   getName(): string {
