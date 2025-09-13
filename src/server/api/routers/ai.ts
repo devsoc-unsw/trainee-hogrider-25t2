@@ -9,6 +9,7 @@ import {
 } from "~/server/api/trpc";
 import CalendarApi from "../service/calendar";
 import WeatherLocationApi from "../service/weatherlocation";
+import WeatherDestinationApi from "../service/weatherdestination";
 import type { ExcuseApi } from "../service/excuseapi";
 import { VapiClient } from "@vapi-ai/server-sdk";
 import LeaguePlayer from "../service/character/leaguePlayer";
@@ -118,38 +119,46 @@ export const aiRouter = createTRPCRouter({
           process.env.OPENWEATHER_API_KEY!,
           input.location
         );
-  apis.push(weatherLocationApi);
-}
-
-      const messages: CoreMessage[] = [SYSTEM_PROMPT];
-
-      const start_all_api = Date.now();
-      for (const api of apis) {
-        try {
-          const start = Date.now();
-          const excuse = await api.getInformation();
-          console.log(excuse);
-          console.log(
-            `     API: ${api.getName()} took ${Date.now() - start}ms`,
-          );
-          messages.push({ role: "system", content: api.getExcusePrompt() });
-          messages.push({ role: "user", content: excuse });
-        } catch (e) {
-          console.log("Skipping api: " + api.getName(), e);
-        }
+        apis.push(weatherLocationApi);
       }
 
-      console.log("Total time: " + (Date.now() - start_all_api) + "ms");
+      if (input.destination) {
+        const weatherDestinationApi = new WeatherDestinationApi(
+        process.env.OPENWEATHER_API_KEY!,
+        input.destination
+      );
+      apis.push(weatherDestinationApi);
+    }
 
-      const start_ai = Date.now();
-      console.log("Here");
-      const { text } = await generateText({
-        model: openai("o3-mini"),
-        messages: messages,
-      });
-      console.log("There");
+    const messages: CoreMessage[] = [SYSTEM_PROMPT];
 
-      console.log("AI took " + (Date.now() - start_ai) + "ms");
-      return text;
-    }),
+    const start_all_api = Date.now();
+    for (const api of apis) {
+      try {
+        const start = Date.now();
+        const excuse = await api.getInformation();
+        console.log(excuse);
+        console.log(
+          `     API: ${api.getName()} took ${Date.now() - start}ms`,
+        );
+        messages.push({ role: "system", content: api.getExcusePrompt() });
+        messages.push({ role: "user", content: excuse });
+      } catch (e) {
+        console.log("Skipping api: " + api.getName(), e);
+      }
+    }
+
+    console.log("Total time: " + (Date.now() - start_all_api) + "ms");
+
+    const start_ai = Date.now();
+    console.log("Here");
+    const { text } = await generateText({
+      model: openai("o3-mini"),
+      messages: messages,
+    });
+    console.log("There");
+
+    console.log("AI took " + (Date.now() - start_ai) + "ms");
+    return text;
+  }),
 });

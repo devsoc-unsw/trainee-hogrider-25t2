@@ -33,7 +33,10 @@ class WeatherDestinationApi extends ExcuseApi {
       };
 
       // TODO: add weatherInfo
-      const weatherInfo = `todo`;
+      const weatherInfo = `Current weather in ${this.destination}: ${weatherCondition.main} - ${weatherCondition.description}\n
+        Temperature: ${data.main.temp}°C (feels like ${data.main.feels_like}°C)\n
+        Wind: ${data.wind?.speed || 0} m/s\n
+        ${data.visibility ? `Visibility: ${data.visibility}m` : ''}`;
 
       return weatherInfo;
 
