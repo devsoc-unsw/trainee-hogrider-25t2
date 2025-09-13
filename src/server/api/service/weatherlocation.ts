@@ -29,7 +29,6 @@ class WeatherLocationApi extends ExcuseApi {
         description: 'No weather data available' 
       };
 
-      // TODO: add weatherInfo
       const weatherInfo = `Current weather in ${this.location}: ${weatherCondition.main} - ${weatherCondition.description}\n
         Temperature: ${data.main.temp}°C (feels like ${data.main.feels_like}°C)\n
         Wind: ${data.wind?.speed || 0} m/s\n
@@ -47,7 +46,7 @@ class WeatherLocationApi extends ExcuseApi {
     return `You have access to current weather information for the user's location (${this.location}).
         When generating an excuse, consider using the provided weather conditions as a reason. For example, bad weather,
         poor visibility (for driving, etc.), traffic delays, extreme temperatures, and so forth.
-        Use these details from the data to make the excuse. If the weather seems fine, you DO NOT NEED TO MENTION THE WEATHER ignore this data, unless purposefully trying to make a nonsensical excuse.`;
+        Use these details from the data to make the excuse. If the weather seems fine, you DO NOT NEED TO MENTION THE WEATHER, unless purposefully trying to make a nonsensical excuse.`;
   }
 
   getName(): string {
