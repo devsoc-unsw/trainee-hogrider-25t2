@@ -114,7 +114,6 @@ export const aiRouter = createTRPCRouter({
       const apis: ExcuseApi[] = [];
 
       if (input.location) {
-        console.log("OpenWeather API Key:", process.env.OPENWEATHER_API_KEY ? "Found" : "Not Found");
         const weatherLocationApi = new WeatherLocationApi(
           process.env.OPENWEATHER_API_KEY!,
           input.location
