@@ -32,7 +32,7 @@ export default function AiExample() {
           }
 
           // Navigate to the display page
-          router.push("/resultsexample");
+          router.push("/result");
         },
       },
       // Todo handle failure cases
