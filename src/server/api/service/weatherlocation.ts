@@ -47,7 +47,7 @@ class WeatherLocationApi extends ExcuseApi {
     return `You have access to current weather information for the user's location (${this.location}).
         When generating an excuse, consider using the provided weather conditions as a reason. For example, bad weather,
         poor visibility (for driving, etc.), traffic delays, extreme temperatures, and so forth.
-        Use these details from the data to make the excuse`;
+        Use these details from the data to make the excuse. If the weather seems fine, you can ignore this data, unless purposefully trying to make a nonsensical excuse.`;
   }
 
   getName(): string {
