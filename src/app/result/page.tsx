@@ -1,10 +1,11 @@
 // Mary code here!!!
 "use client";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import Nav from "../_components/nav";
 import { useEffect, useState } from "react";
 
 export default function Result() {
+  const router = useRouter();
   const [resultString, setResultString] = useState<string | null>(null);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [colourScheme, setColourScheme] = useState<any>({});
