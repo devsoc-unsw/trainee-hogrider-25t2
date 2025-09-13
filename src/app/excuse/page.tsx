@@ -26,6 +26,8 @@ export default function Excuse() {
     try {
       const result = await burnMoney.mutateAsync({
         text,
+        location,
+        destination,
       });
 
       if (typeof window !== "undefined") {

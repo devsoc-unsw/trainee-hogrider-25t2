@@ -8,6 +8,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import CalendarApi from "../service/calendar";
+import WeatherLocationApi from "../service/weatherlocation";
 import type { ExcuseApi } from "../service/excuseapi";
 import { VapiClient } from "@vapi-ai/server-sdk";
 import LeaguePlayer from "../service/character/leaguePlayer";
@@ -85,7 +86,12 @@ export const aiRouter = createTRPCRouter({
 
   burnMoney: protectedProcedure
     // If necessary add more parameters. Described by zod if you want to look it up
-    .input(z.object({ text: z.string(), character: z.string().optional() }))
+    .input(z.object({ 
+      text: z.string(), 
+      character: z.string().optional(),
+      location: z.string().optional(),
+      destination: z.string().optional()
+    }))
     .mutation(async ({ ctx, input }) => {
       // 1. Call appropiate APIs here
       // 2. Feed the relevant data into the ai to generate a response
@@ -105,6 +111,15 @@ export const aiRouter = createTRPCRouter({
       };
 
       const apis: ExcuseApi[] = [];
+
+      if (input.location) {
+        console.log("OpenWeather API Key:", process.env.OPENWEATHER_API_KEY ? "Found" : "Not Found");
+        const weatherLocationApi = new WeatherLocationApi(
+          process.env.OPENWEATHER_API_KEY!,
+          input.location
+        );
+  apis.push(weatherLocationApi);
+}
 
       const messages: CoreMessage[] = [SYSTEM_PROMPT];
 
