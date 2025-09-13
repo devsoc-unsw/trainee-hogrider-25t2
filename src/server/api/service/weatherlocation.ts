@@ -19,7 +19,7 @@ class WeatherLocationApi extends ExcuseApi {
       );
 
       if (!response.ok) {
-        throw new Error(`OpenWeather API responded with status: ${response.status}`);
+        throw new Error(`OpenWeather API responded with status ${response.status}`);
       }
 
       const data: WeatherData = await response.json();
@@ -38,7 +38,7 @@ class WeatherLocationApi extends ExcuseApi {
 
     } catch (error) {
       console.error("Error fetching weather data:", error);
-      return Promise.reject(new Error("Error in fetching weather information"));
+      return Promise.reject(new Error("Error in fetching weather information for user's current location"));
     }
   }
 
@@ -50,7 +50,7 @@ class WeatherLocationApi extends ExcuseApi {
   }
 
   getName(): string {
-    return `Weather (${this.location})`;
+    return `Weather Location (${this.location})`;
   }
 }
 

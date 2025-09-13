@@ -21,7 +21,7 @@ class WeatherDestinationApi extends ExcuseApi {
       );
 
       if (!response.ok) {
-        throw new Error(`OpenWeather API responded with status: ${response.status}`);
+        throw new Error(`OpenWeather API responded with status ${response.status}`);
       }
 
       const data: WeatherData = await response.json();
@@ -31,7 +31,6 @@ class WeatherDestinationApi extends ExcuseApi {
         description: 'No weather data available' 
       };
 
-      // TODO: add weatherInfo
       const weatherInfo = `Current weather in ${this.destination}: ${weatherCondition.main} - ${weatherCondition.description}\n
         Temperature: ${data.main.temp}°C (feels like ${data.main.feels_like}°C)\n
         Wind: ${data.wind?.speed || 0} m/s\n
@@ -41,7 +40,7 @@ class WeatherDestinationApi extends ExcuseApi {
 
     } catch (error) {
       console.error("Error fetching weather data:", error);
-      return Promise.reject(new Error("Error in fetching weather information"));
+      return Promise.reject(new Error("Error in fetching weather information for user's destination"));
     }
   }
 
@@ -52,7 +51,7 @@ class WeatherDestinationApi extends ExcuseApi {
   }
 
   getName(): string {
-    return `Weather (${this.destination})`;
+    return `Weather Destination (${this.destination})`;
   }
 }
 
