@@ -17,11 +17,6 @@ export default function Nav() {
             HISTORY
           </Link>
         </li>
-        <li>
-          <Link href="/stats" className="hover:text-gray-400">
-            STATS
-          </Link>
-        </li>
       </ul>
     </nav>
   );
