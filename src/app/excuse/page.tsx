@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import Nav from "../_components/nav";
+import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 
 // Ethan code here!!!
 export default function Excuse() {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const burnMoney = api.ai.burnMoney.useMutation();
 
@@ -14,19 +16,28 @@ export default function Excuse() {
     setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
+    const location = formData.get("location") as string;
+    const destination = formData.get("destination") as string;
+    const time = formData.get("time") as string;
     const reason = formData.get("reason") as string;
-    // Todo get other fields
+    const text = `I'm currently at ${location} and need to get to ${destination}. I'm running late because: ${reason}, and it is currently ${time}.
+                  Please generate a creative and believable excuse for why I'm late.`;
 
     try {
-      // TODO add other fields
-      // Need to add extra parameters to the api in the backend. Ctrl/cmd-click api.ai.burnMoney above
+      const result = await burnMoney.mutateAsync({
+        text,
+        location,
+        destination,
+      });
+
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("processedResultString", result);
+      }
+
+      router.push("/result");
 
       // Alternatively since this is all going to an AI you can put all the info into a string and push it to BE
       // Since its all going to get stringified in the end <-- This is probably going to be easier
-      const result = await burnMoney.mutateAsync({
-        text,
-      });
-
       // TODO navigate to the results page
       // Data should be maintained, several ways to do this. slug etc. Pretty googleable u got this :thumbsup:
     } catch (error) {
