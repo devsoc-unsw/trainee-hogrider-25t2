@@ -50,70 +50,96 @@ export default function Excuse() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-hidden">
       <ScrollingBackgrounds />
       <BgOverlay />
-      <div className="absolute inset-0 z-10">
+      <div className="absolute inset-0 z-10 overflow-hidden">
         <Nav />
+        <div className="flex h-screen pt-4 overflow-hidden">
+          
+          {/* Form Section */}
+          <div className="w-1/3 flex items-start justify-center p-4 pt-8 pl-22">
+            <div className="w-full max-w-md rounded-lg bg-white p-6 drop-shadow-2xl shadow-lg shadow-black/50">
+              <h2 className="mb-4 text-2xl font-bold font-brush ml-5 mt-1 -rotate-[1deg]">What's your excuse?</h2>
 
-        {/* Form Section */}
-        <div className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-lg">
-          <h2 className="mb-4 text-2xl font-bold">What's your excuse?</h2>
+              <form className="space-y-4" onSubmit={handleSubmit}>
+                <div>
+                  <label className="mb-1 block text-lg font-medium">WYA?</label>
+                  <input
+                    name="location"
+                    type="text"
+                    className="w-full rounded border border-gray-300 p-2 text-lg"
+                    placeholder="Where are you?"
+                    required
+                  />
+                </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <div>
-              <label className="mb-1 block text-lg font-medium">WYA</label>
-              <input
-                name="location"
-                type="text"
-                className="w-full rounded border border-gray-300 p-2 text-lg"
-                placeholder="Where are you?"
-                required
+                <div>
+                  <label className="mb-1 block text-lg font-medium">
+                    Destination
+                  </label>
+                  <input
+                    name="destination"
+                    type="text"
+                    className="w-full rounded border border-gray-300 p-2 text-lg"
+                    placeholder="Where are you going?"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-lg font-medium">Time</label>
+                  <input
+                    name="time"
+                    type="time"
+                    className="w-full rounded border border-gray-300 p-2 text-lg"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-lg font-medium">Anything Else?</label>
+                  <textarea
+                    name="reason"
+                    className="w-full rounded border border-gray-300 p-2 text-lg"
+                    placeholder="Explain why you're late"
+                    rows={3}
+                    required
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full rounded-lg bg-black py-2 text-xl text-white hover:bg-gray-800 disabled:opacity-50"
+                >
+                  {isSubmitting ? "Generating..." : "SUBMIT"}
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* animation */}
+          <div className="w-2/3 flex items-start justify-center p-2 pt-8">
+            <div style={{ 
+                width: '800px', 
+                height: '1000px', 
+                overflow: 'hidden',
+                alignItems: 'flex-start',
+              }}>
+              <img 
+                src="/stickman-animations/stickman-running-animation.gif"
+                alt="Stickman running"
+                style={{ 
+                  filter: 'invert(1)',
+                  transform: 'scale(3)',
+                  transformOrigin: 'top center', 
+                  marginTop: '-250px'
+                }}
               />
             </div>
+          </div>
 
-            <div>
-              <label className="mb-1 block text-lg font-medium">
-                Destination
-              </label>
-              <input
-                name="destination"
-                type="text"
-                className="w-full rounded border border-gray-300 p-2 text-lg"
-                placeholder="Where are you going?"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="mb-1 block text-lg font-medium">Time</label>
-              <input
-                name="time"
-                type="time"
-                className="w-full rounded border border-gray-300 p-2 text-lg"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="mb-1 block text-lg font-medium">Why Late</label>
-              <textarea
-                name="reason"
-                className="w-full rounded border border-gray-300 p-2 text-lg"
-                placeholder="Explain why you're late"
-                rows={3}
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full rounded-lg bg-black py-2 text-xl text-white hover:bg-gray-800 disabled:opacity-50"
-            >
-              {isSubmitting ? "Generating..." : "Submit"}
-            </button>
-          </form>
         </div>
       </div>
     </div>
