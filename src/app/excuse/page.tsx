@@ -4,6 +4,7 @@ import { useState } from "react";
 import Nav from "../_components/nav";
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
+import ScrollingBackgrounds from "../_components/scrollingbackgrounds";
 
 // Ethan code here!!!
 export default function Excuse() {
@@ -48,67 +49,70 @@ export default function Excuse() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Nav />
+    <div className="min-h-screen">
+      <ScrollingBackgrounds />
+      <div className="absolute inset-0 z-10">
+        <Nav />
 
-      {/* Form Section */}
-      <div className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-lg">
-        <h2 className="mb-4 text-2xl font-bold">What's your excuse?</h2>
+        {/* Form Section */}
+        <div className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-lg">
+          <h2 className="mb-4 text-2xl font-bold">What's your excuse?</h2>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div>
-            <label className="mb-1 block text-lg font-medium">WYA</label>
-            <input
-              name="location"
-              type="text"
-              className="w-full rounded border border-gray-300 p-2 text-lg"
-              placeholder="Where are you?"
-              required
-            />
-          </div>
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <div>
+              <label className="mb-1 block text-lg font-medium">WYA</label>
+              <input
+                name="location"
+                type="text"
+                className="w-full rounded border border-gray-300 p-2 text-lg"
+                placeholder="Where are you?"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="mb-1 block text-lg font-medium">
-              Destination
-            </label>
-            <input
-              name="destination"
-              type="text"
-              className="w-full rounded border border-gray-300 p-2 text-lg"
-              placeholder="Where are you going?"
-              required
-            />
-          </div>
+            <div>
+              <label className="mb-1 block text-lg font-medium">
+                Destination
+              </label>
+              <input
+                name="destination"
+                type="text"
+                className="w-full rounded border border-gray-300 p-2 text-lg"
+                placeholder="Where are you going?"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="mb-1 block text-lg font-medium">Time</label>
-            <input
-              name="time"
-              type="time"
-              className="w-full rounded border border-gray-300 p-2 text-lg"
-              required
-            />
-          </div>
+            <div>
+              <label className="mb-1 block text-lg font-medium">Time</label>
+              <input
+                name="time"
+                type="time"
+                className="w-full rounded border border-gray-300 p-2 text-lg"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="mb-1 block text-lg font-medium">Why Late</label>
-            <textarea
-              name="reason"
-              className="w-full rounded border border-gray-300 p-2 text-lg"
-              placeholder="Explain why you're late"
-              rows={3}
-              required
-            />
-          </div>
+            <div>
+              <label className="mb-1 block text-lg font-medium">Why Late</label>
+              <textarea
+                name="reason"
+                className="w-full rounded border border-gray-300 p-2 text-lg"
+                placeholder="Explain why you're late"
+                rows={3}
+                required
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full rounded-lg bg-black py-2 text-xl text-white hover:bg-gray-800 disabled:opacity-50"
-          >
-            {isSubmitting ? "Generating..." : "Submit"}
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full rounded-lg bg-black py-2 text-xl text-white hover:bg-gray-800 disabled:opacity-50"
+            >
+              {isSubmitting ? "Generating..." : "Submit"}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

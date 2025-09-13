@@ -26,7 +26,7 @@ export default function Result() {
           scheme: {
             sorryBox: "bg-gradient-to-br from-purple-700 to-[#9A5DCC]",
             responseBox: "bg-white/95 border-l-4 border-purple-400 shadow-purple-900/80",
-            button: "bg-gradient-to-br from-purple-700 to-indigo-900"
+            button: "bg-gradient-to-br from-purple-700 to-[#9A5DCC]"
           }
         },
         {
@@ -34,7 +34,7 @@ export default function Result() {
           scheme: {
             sorryBox: "bg-gradient-to-br from-orange-700 to-red-900",
             responseBox: "bg-white/95 border-l-4 border-red-400 shadow-red-900/80",
-            button: "bg-gradient-to-br from-red-700 to-red-900"
+            button: "bg-gradient-to-br from-orange-700 to-red-900"
           }
         },
         {
@@ -42,7 +42,7 @@ export default function Result() {
           scheme: {
             sorryBox: "bg-gradient-to-br from-[#316532] to-[#4FA050]",
             responseBox: "bg-white/95 border-l-4 border-[#4FA050] shadow-green-900/80",
-            button: "bg-gradient-to-br from-blue-700 to-cyan-900"
+            button: "bg-gradient-to-br from-[#316532] to-[#4FA050]"
           }
         }
       ];
@@ -79,17 +79,16 @@ export default function Result() {
           </div>
         </main>
 
-        {/* see reactions (scrapped for now)
-        <aside className="fixed bottom-16 left-16 w-50 z-40 drop-shadow-2xl">
+        <aside className="fixed bottom-16 left-16 w-50 z-40">
           <button
-            className={`py-3 px-6 ${colourScheme.button || 'bg-black'} text-white rounded-lg font-semibold w-full`}
+            className={`py-3 px-6 ${colourScheme.button || 'bg-black'} text-white rounded-lg font-semibold w-full drop-shadow-2xl shadow-black/50 hover:scale-105 hover:transition-all duration-200 cursor-pointer shadow-2xl`}
             onClick={() => {
-              alert("wop wop not working yet");
+              router.push("/excuse");
             }}
           >
-            SEE REACTIONS...
+            TRY AGAIN?
           </button>
-        </aside> */}
+        </aside>
       </div>
     );
   }
