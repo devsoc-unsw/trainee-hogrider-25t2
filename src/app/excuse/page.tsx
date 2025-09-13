@@ -5,6 +5,7 @@ import Nav from "../_components/nav";
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 import ScrollingBackgrounds from "../_components/scrollingbackgrounds";
+import BgOverlay from "../_components/bgoverlay";
 
 // Ethan code here!!!
 export default function Excuse() {
@@ -51,6 +52,7 @@ export default function Excuse() {
   return (
     <div className="min-h-screen">
       <ScrollingBackgrounds />
+      <BgOverlay />
       <div className="absolute inset-0 z-10">
         <Nav />
 

@@ -2,6 +2,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Nav from "../_components/nav";
+import BgOverlay from "../_components/bgoverlay";
 import { useEffect, useState } from "react";
 
 export default function Result() {
@@ -61,8 +62,7 @@ export default function Result() {
           backgroundPosition: "center 50px"
         }}>
       
-      {/* bg image overlay */}
-      <div className="absolute inset-x-0 top-12 bottom-0 bg-black opacity-50"></div>
+      <BgOverlay />
       <Nav />
       
       {/* ai-generated excuse */}
