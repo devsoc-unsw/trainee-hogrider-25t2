@@ -157,6 +157,13 @@ export const aiRouter = createTRPCRouter({
       }
     }
 
+    if (apis.length > 1) {
+      messages.push({
+        role: "system",
+        content: `Note that although you have access to weather and transport information, you do not need to make use of all of them in the excuse. Choose the most relevant if trying to make the excuse believable, even if it means using all data sources.`
+      });
+    }
+
     console.log("Total time: " + (Date.now() - start_all_api) + "ms");
 
     const start_ai = Date.now();
