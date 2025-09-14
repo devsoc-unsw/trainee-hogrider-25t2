@@ -84,7 +84,7 @@ class TransportApi extends ExcuseApi {
   getExcusePrompt(): string {
     return `You have access to NSW Transport information from ${this.location} to ${this.destination}.
         When generating an excuse, consider using transport-related issues. If the information seems reasonable, you DO NOT NEED TO MENTION TRANSPORT, 
-        unless purposefully trying to make a nonsensical excuse.`;
+        unless purposefully trying to make a nonsensical excuse. If transport data is unavailable and there was an error in fetching it, DO NOT MENTION TRANSPORT.`;
   }
 
   getName(): string {
