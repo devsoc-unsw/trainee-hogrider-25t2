@@ -8,6 +8,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import CalendarApi from "../service/calendar";
+import TransportApi from "../service/transport";
 import WeatherLocationApi from "../service/weatherlocation";
 import WeatherDestinationApi from "../service/weatherdestination";
 import type { ExcuseApi } from "../service/excuseapi";
@@ -123,11 +124,20 @@ export const aiRouter = createTRPCRouter({
 
       if (input.destination) {
         const weatherDestinationApi = new WeatherDestinationApi(
-        process.env.OPENWEATHER_API_KEY!,
-        input.destination
-      );
-      apis.push(weatherDestinationApi);
-    }
+          process.env.OPENWEATHER_API_KEY!,
+          input.destination
+        );
+        apis.push(weatherDestinationApi);
+      }
+
+      if (input.destination && input.location) {
+        const transportApi = new TransportApi(
+          process.env.NSWTRANSPORT_API_KEY!,
+          input.location,
+          input.destination,
+        );
+        apis.push(transportApi);
+      }
 
     const messages: CoreMessage[] = [SYSTEM_PROMPT];
 
