@@ -157,10 +157,15 @@ export const aiRouter = createTRPCRouter({
       }
     }
 
+    messages.push({
+      role: "system",
+      content: `You have access to the above data sources. Some may have failed or returned no useful information. Only use the data that would make for a believable excuse. If no transport issues exist, don't mention transport. If weather is fine, consider other reasons. Create a natural excuse based on available information.`
+    });
+
     if (apis.length > 1) {
       messages.push({
         role: "system",
-        content: `Note that although you have access to weather and transport information, you do not need to make use of all of them in the excuse. Choose the most relevant if trying to make the excuse believable, even if it means using all data sources.`
+        content: `Note that although you have access to weather and transport information, you do not need to make use of all of them in the excuse. Choose the most relevant if trying to make the excuse believable, even if it means using all data sources. Furthermore, please try to give a specific reason in the excuse, and make it sound human-like.`
       });
     }
 
