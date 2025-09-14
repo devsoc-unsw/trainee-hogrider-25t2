@@ -14,6 +14,7 @@ export default function Excuse() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const burnMoney = api.ai.burnMoney.useMutation();
+  const { data } = api.ai.getCharacters.useQuery();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,6 +25,7 @@ export default function Excuse() {
     const destination = formData.get("destination") as string;
     const time = formData.get("time") as string;
     const reason = formData.get("reason") as string;
+    const character = formData.get("character") as string;
     const text = `I'm currently at ${location} and need to get to ${destination}. I'm running late because: ${reason}, and it is currently ${time}.
                   Please generate a creative and believable excuse for why I'm late.`;
 
@@ -31,11 +33,13 @@ export default function Excuse() {
       const result = await burnMoney.mutateAsync({
         text,
         location,
+        character,
         destination,
       });
 
       if (typeof window !== "undefined") {
         sessionStorage.setItem("processedResultString", result);
+        sessionStorage.setItem("character", character);
       }
 
       router.push("/result");
@@ -93,6 +97,7 @@ export default function Excuse() {
                 name="time"
                 type="time"
                 className="w-full rounded border border-gray-300 p-2 text-lg"
+                defaultValue={new Date().toTimeString().slice(0, 5)}
                 required
               />
             </div>
@@ -106,6 +111,22 @@ export default function Excuse() {
                 rows={3}
                 required
               />
+            </div>
+
+            <div>
+              <label className="mb-1 block text-lg font-medium">
+                Character
+              </label>
+              <select
+                name="character"
+                className="w-full rounded border border-gray-300 p-2 text-lg"
+              >
+                {data?.map((character) => (
+                  <option key={character} value={character}>
+                    {character}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <button
