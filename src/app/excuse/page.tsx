@@ -14,6 +14,7 @@ export default function Excuse() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const burnMoney = api.ai.burnMoney.useMutation();
+  const { data } = api.ai.getCharacters.useQuery();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,6 +25,7 @@ export default function Excuse() {
     const destination = formData.get("destination") as string;
     const time = formData.get("time") as string;
     const reason = formData.get("reason") as string;
+    const character = formData.get("character") as string;
     const text = `I'm currently at ${location} and need to get to ${destination}. I'm running late because: ${reason}, and it is currently ${time}.
                   Please generate a creative and believable excuse for why I'm late.`;
 
@@ -31,11 +33,13 @@ export default function Excuse() {
       const result = await burnMoney.mutateAsync({
         text,
         location,
+        character,
         destination,
       });
 
       if (typeof window !== "undefined") {
         sessionStorage.setItem("processedResultString", result);
+        sessionStorage.setItem("character", character);
       }
 
       router.push("/result");
@@ -57,12 +61,13 @@ export default function Excuse() {
       <BgOverlay />
       <div className="absolute inset-0 z-10 overflow-hidden">
         <Nav />
-        <div className="flex h-screen pt-4 overflow-hidden">
-          
+        <div className="flex h-screen overflow-hidden pt-4">
           {/* Form Section */}
-          <div className="w-1/3 flex items-start justify-center p-4 pt-8 pl-22">
-            <div className="w-full max-w-md rounded-lg bg-white p-6 drop-shadow-2xl shadow-lg shadow-black/50">
-              <h2 className="mb-4 text-2xl font-bold font-brush ml-5 mt-1 -rotate-[1deg]">What's your excuse?</h2>
+          <div className="flex w-1/3 items-start justify-center p-4 pt-8 pl-22">
+            <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg shadow-black/50 drop-shadow-2xl">
+              <h2 className="font-brush mt-1 mb-4 ml-5 -rotate-[1deg] text-2xl font-bold">
+                What's your excuse?
+              </h2>
 
               <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
@@ -95,12 +100,15 @@ export default function Excuse() {
                     name="time"
                     type="time"
                     className="w-full rounded border border-gray-300 p-2 text-lg"
+                    defaultValue={new Date().toTimeString().slice(0, 5)}
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-lg font-medium">Anything Else?</label>
+                  <label className="mb-1 block text-lg font-medium">
+                    Why Late
+                  </label>
                   <textarea
                     name="reason"
                     className="w-full rounded border border-gray-300 p-2 text-lg"
@@ -108,6 +116,22 @@ export default function Excuse() {
                     rows={3}
                     required
                   />
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-lg font-medium">
+                    Character
+                  </label>
+                  <select
+                    name="character"
+                    className="w-full rounded border border-gray-300 p-2 text-lg"
+                  >
+                    {data?.map((character) => (
+                      <option key={character} value={character}>
+                        {character}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <button
@@ -122,26 +146,27 @@ export default function Excuse() {
           </div>
 
           {/* animation */}
-          <div className="w-2/3 flex items-start justify-center p-2 pt-8">
-            <div style={{ 
-                width: '800px', 
-                height: '1000px', 
-                overflow: 'hidden',
-                alignItems: 'flex-start',
-              }}>
-              <img 
+          <div className="flex w-2/3 items-start justify-center p-2 pt-8">
+            <div
+              style={{
+                width: "800px",
+                height: "1000px",
+                overflow: "hidden",
+                alignItems: "flex-start",
+              }}
+            >
+              <img
                 src="/stickman-animations/stickman-running-animation.gif"
                 alt="Stickman running"
-                style={{ 
-                  filter: 'invert(1)',
-                  transform: 'scale(3)',
-                  transformOrigin: 'top center', 
-                  marginTop: '-250px'
+                style={{
+                  filter: "invert(1)",
+                  transform: "scale(3)",
+                  transformOrigin: "top center",
+                  marginTop: "-250px",
                 }}
               />
             </div>
           </div>
-
         </div>
       </div>
     </div>
