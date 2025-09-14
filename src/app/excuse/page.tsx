@@ -4,7 +4,9 @@ import { useState } from "react";
 import Nav from "../_components/nav";
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
+
 import ScrollingBackgrounds from "../_components/plainscrollingbackgrounds";
+
 import BgOverlay from "../_components/bgoverlay";
 
 // Ethan code here!!!

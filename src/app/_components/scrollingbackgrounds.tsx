@@ -8,13 +8,17 @@ export default function ScrollingBackgrounds() {
   ];
 
   return (
+
     <div className="w-full h-screen relative">
       {/* Scrolling background images */}
+
       <div className="flex animate-scroll-infinite">
         {[...images, ...images].map((image, index) => (
           <div
             key={index}
+
             className="min-w-full h-screen bg-cover bg-center"
+
             style={{ backgroundImage: `url('${image}')` }}
           />
         ))}
@@ -70,13 +74,14 @@ export default function ScrollingBackgrounds() {
           className="h-20 w-20 animate-run-across-top-slow opacity-70 brightness-75 contrast-125"
         />
       </div>
-      
+
       <style jsx>{`
         @keyframes scroll-infinite {
           100% {
             transform: translateX(-300%);
           }
         }
+
         @keyframes run-across {
           0% {
             transform: translateX(-150px);
@@ -146,6 +151,7 @@ export default function ScrollingBackgrounds() {
         .animate-run-across-top-slow {
           animation: run-across-top-slow 13s linear infinite 5s;
         }
+
       `}</style>
     </div>
   );
