@@ -56,20 +56,20 @@ export default function Excuse() {
   };
 
   return (
-    <div className="min-h-screen overflow-hidden">
+    <div className="h-screen overflow-hidden">
       <ScrollingBackgrounds />
       <BgOverlay />
       <div className="absolute inset-0 z-10 overflow-hidden">
         <Nav />
-        <div className="flex h-screen overflow-hidden pt-4">
+        <div className="ml-10 flex h-[calc(100vh-8rem)]">
           {/* Form Section */}
-          <div className="flex w-1/3 items-start justify-center p-4 pt-8 pl-22">
-            <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg shadow-black/50 drop-shadow-2xl">
+          <div className="flex w-1/3 items-center justify-center p-4">
+            <div className="max-h-[calc(100vh-8rem)] w-full max-w-md overflow-y-auto rounded-lg bg-white p-4 shadow-lg shadow-black/50 drop-shadow-2xl">
               <h2 className="font-brush mt-1 mb-4 ml-5 -rotate-[1deg] text-2xl font-bold">
                 What's your excuse?
               </h2>
 
-              <form className="space-y-4" onSubmit={handleSubmit}>
+              <form className="space-y-3" onSubmit={handleSubmit}>
                 <div>
                   <label className="mb-1 block text-lg font-medium">WYA?</label>
                   <input
@@ -146,23 +146,14 @@ export default function Excuse() {
           </div>
 
           {/* animation */}
-          <div className="flex w-2/3 items-start justify-center p-2 pt-8">
-            <div
-              style={{
-                width: "800px",
-                height: "1000px",
-                overflow: "hidden",
-                alignItems: "flex-start",
-              }}
-            >
+          <div className="flex w-2/3 items-center justify-center p-4">
+            <div className="flex items-center justify-center">
               <img
                 src="/stickman-animations/stickman-running-animation.gif"
                 alt="Stickman running"
+                className="max-h-[70vh] max-w-full object-contain select-none"
                 style={{
                   filter: "invert(1)",
-                  transform: "scale(3)",
-                  transformOrigin: "top center",
-                  marginTop: "-250px",
                 }}
               />
             </div>
